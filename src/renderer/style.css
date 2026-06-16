@@ -1,0 +1,753 @@
+/*
+ *  This file is part of Moeditor.
+ *
+ *  Copyright (c) 2016 Menci <huanghaorui301@gmail.com>
+ *  Copyright (c) 2016 Wamadahama
+ *
+ *  Moeditor is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Moeditor is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Moeditor. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -webkit-user-select: none;
+}
+
+#side-menu {
+    width: 300px;
+    margin-left: -300px;
+    height: 100%;
+    background: #fafafa;
+    transition: all 200ms ease-in-out;
+    padding-top: 45px;
+    padding-bottom: 45px;
+    cursor: default;
+    z-index: 1;
+    position: absolute;
+    border-right: 1px solid #ccc;
+}
+
+#side-menu #logo {
+    font-family: Raleway;
+    font-size: 35px;
+    font-weight: lighter;
+    letter-spacing: 10px;
+    text-align: center;
+    color: #666;
+    border-bottom: 1px solid #ececec;
+    padding-bottom: 30px;
+}
+
+#side-menu ul {
+    margin-top: 10px;
+    padding: 0;
+    color: #444;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+#side-menu li {
+    font-family: Roboto, Helvetica, 'Segoe UI', Arial, sans-serif;;
+    list-style-type: none;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 30px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+#side-menu li:hover {
+    background-color: rgb(236, 236, 236);
+}
+
+#side-menu li:active {
+    background-color: rgb(222, 222, 222);
+}
+
+#side-menu li.break {
+    height: 10px;
+    pointer-events: none;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 10px;
+}
+
+#side-menu-cover, #file-tree-cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1000001;
+    background: rgba(77, 77, 77, 0.2);
+    transition: all 500ms ease-in-out;
+    pointer-events: none;
+    opacity: 0;
+}
+
+#main {
+    transition: all 500ms ease-in-out;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#main-container {
+    height: calc(100% - 25px);
+}
+
+#left-panel {
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: calc(100% - 25px);
+    transition: all 500ms ease-in-out;
+}
+
+#right-panel {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: calc(100% - 25px);
+    transition: all 500ms ease-in-out;
+}
+
+#main.read-mode #left-panel {
+    left: -50%;
+    width: 50%;
+}
+
+#main.read-mode #right-panel {
+    width: 100%;
+    padding-right: 4px;
+}
+
+#main.read-mode #right-panel .cover-top {
+    left: 0;
+    width: calc(100% - 10px);
+}
+
+#main.write-mode #left-panel {
+    width: 100%;
+}
+
+#main.read-mode #left-panel .cover-top {
+    width: calc(100% - 10px);
+}
+
+#main.write-mode #right-panel {
+    right: -50%;
+    width: 50%;
+}
+
+#editor {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    transition: all 500ms ease-in-out;
+    -webkit-user-select: initial;
+}
+
+#main.write-mode.write-mode-thin .CodeMirror-scroll {
+    width: calc(100% / 3 + 6px) !important;
+    padding-left: calc(100% / 3) !important;
+    padding-right: calc(100% / 3) !important;
+}
+
+#main.write-mode.write-mode-medium .CodeMirror-scroll {
+    width: calc(100% / 2 + 6px) !important;
+    padding-left: calc(100% / 4) !important;
+    padding-right: calc(100% / 4) !important;
+}
+
+#main.write-mode.write-mode-wide .CodeMirror-scroll {
+    width: calc((100% / 3) * 2 + 6px) !important;
+    padding-left: calc(100% / 6) !important;
+    padding-right: calc(100% / 6) !important;
+}
+
+#editor.write-mode .CodeMirror-scroll {
+    padding-left: 0;
+    padding-right: 0;
+    width: calc(100% + 30px) !important;
+}
+
+#editor.focus .CodeMirror-line {
+    transition: opacity 150ms !important;
+    opacity: 0.3;
+}
+
+#editor.focus .CodeMirror-activeline .CodeMirror-line {
+    opacity: 1;
+}
+
+.CodeMirror-activeline-background { background: none; }
+
+#editor textarea {
+    width: 0;
+    height: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.cover {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    cursor: default;
+    z-index: 1000;
+}
+
+.cover-top {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 1000;
+}
+
+#left-panel .cover-top {
+    left: 0;
+}
+
+#right-panel .cover-top {
+    right: 0;
+}
+
+.cover-nobackground {
+    background: transparent !important;
+}
+
+#cover-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    z-index: 1000;
+    border-top: 1px solid rgba(128, 128, 128, 0.3);
+    -webkit-app-region: no-drag;
+}
+
+#cover-bottom #cover-bottom-background-left {
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    transition: all 500ms ease-in-out;
+}
+
+#cover-bottom #cover-bottom-background-right {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    transition: all 500ms ease-in-out;
+}
+
+#main.read-mode #cover-bottom-background-left {
+    left: -50%;
+}
+
+#main.read-mode #cover-bottom-background-right {
+    width: 100%;
+}
+
+#main.write-mode #cover-bottom-background-left {
+    width: 100%;
+}
+
+#main.write-mode #cover-bottom-background-right {
+    right: -50%;
+}
+
+#cover-bottom .button-bottom {
+    display: inline-block;
+    pointer-events: auto;
+    color: #b3b3b3;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+#cover-bottom-left {
+    position: absolute;
+    left: 0;
+    width: calc(50% - 10px);
+    height: 100%;
+    padding-left: 10px;
+}
+
+#cover-bottom-right {
+    position: absolute;
+    right: 0;
+    width: calc(50% - 10px);
+    height: 100%;
+    padding-right: 10px;
+    text-align: right;
+}
+
+#cover-bottom .button-bottom.hover {
+    color: #cecece;
+}
+
+#cover-bottom .button-bottom:active {
+    color: #dcdcdc;
+}
+
+/*#editor * {
+    transition: all 500ms ease-in-out;
+}*/
+
+body[settings-editor-font="default"] #editor * {
+    font-family: 'Roboto Mono', 'Menlo', 'Ubuntu Mono', 'Consolas', 'Liberation Mono', 'Dejavu Mans Mono', monospace !important;
+}
+
+html[lang="zh_CN"] body[settings-editor-font="default"] #editor * {
+    font-family: 'Roboto Mono', 'Menlo', 'Ubuntu Mono', 'Consolas', 'Liberation Mono', 'Dejavu Mans Mono', monospace, 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft Yahei' !important;
+}
+
+body[settings-editor-font="monospace"] #editor * {
+    font-family: monospace !important;
+}
+
+body[settings-editor-font="serif"] #editor  * {
+    font-family: serif !important;
+}
+
+body[settings-editor-font="sans"] #editor  * {
+    font-family: sans-serif !important;
+}
+
+.CodeMirror-wrap, .CodeMirror pre, .CodeMirror span, .CodeMirror-vscrollbar div, .CodeMirror-measure {
+    transition: none !important;
+}
+
+#editor .CodeMirror {
+    width: 100%;
+    height: 100%;
+}
+
+#container-wrapper {
+    width: calc(100% + 6px);
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    outline: none;
+}
+
+#container {
+    padding-top: 40px;
+    padding-bottom: 30px;
+    padding-left: 45px;
+    padding-right: 40px;
+    font-size: 14px;
+    transition: all 500ms ease-in-out;
+    -webkit-user-select: initial;
+}
+
+#main.read-mode #container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#main.read-mode #container-wrapper {
+    width: calc(100%);
+}
+
+#main.read-mode.read-mode-thin #container {
+    width: calc(100% / 3);
+    margin-left: calc(100% / 3);
+    margin-right: calc(100% / 3);
+}
+
+#main.read-mode.read-mode-medium #container {
+    width: calc(100% / 2);
+    margin-left: calc(100% / 4);
+    margin-right: calc(100% / 4);
+}
+
+#main.read-mode.read-mode-wide #container {
+    width: calc((100% / 3) * 2);
+    margin-left: calc(100% / 6);
+    margin-right: calc(100% / 6);
+}
+
+.cm-s-default .cm-header {
+    color: inherit !important;
+}
+
+.cm-header-1 { font-size: 1.5em; }
+.cm-header-2 { font-size: 1.3em; }
+.cm-header-3 { font-size: 1.2em; }
+.cm-header-4 { font-size: 1.1em; }
+.cm-header-5 { font-size: 1.05em; }
+.cm-header-6 { font-size: 1em; }
+
+.CodeMirror-scroll {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: scroll !important;
+    padding-left: 45px;
+    padding-right: 20px;
+    padding-top: 35px;
+    height: calc(100% - 35px - 31px);
+    width: calc(100% - 45px - 20px - 24px + 30px) !important;
+    transition: all 500ms ease-in-out;
+}
+
+.CodeMirror-vscrollbar {
+    z-index: 1000000 !important;
+}
+
+#main.write-mode .CodeMirror-vscrollbar {
+    position: fixed !important;
+    right: 4px !important;
+    bottom: 25px !important;
+}
+
+.CodeMirror {
+    font-size: 14px;
+}
+
+.CodeMirror-cursors {
+    transition: opacity 500ms ease-in-out !important;
+}
+
+.CodeMirror-cursors[style="visibility: hidden;"] {
+    opacity: 0 !important;
+    visibility: visible !important;
+}
+
+.CodeMirror-lines {
+    overflow-x: hidden;
+}
+
+#drag-left {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(50% - 6px);
+    height: 100%;
+}
+
+#drag-right {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+}
+
+body[settings-mode=read] #drag-left, body[settings-mode=write] #drag-left {
+    width: calc(100% - 6px);
+}
+
+body[settings-mode=read] #drag-right, body[settings-mode=write] #drag-right {
+    width: 0;
+    right: 0;
+}
+
+.notransition, .notransition *:not(.CodeMirror-cursors):not(.CodeMirror-lines) {
+    transition: none !important;
+}
+
+.biu-instance {
+    -webkit-app-region: no-drag;
+    font-size: 14px;
+    font-family: Roboto, Helvetica, 'Segoe UI', Arial, sans-serif;
+}
+/*
+ *  This file is part of Moeditor.
+ *
+ *  Copyright (c) 2016 Menci <huanghaorui301@gmail.com>
+ *  Copyright (c) 2016 tmr232
+ *
+ *  Moeditor is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Moeditor is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Moeditor. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#popup-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    pointer-events: none;
+}
+
+#popup-layer .popup-menu {
+    outline: none;
+    position: fixed;
+    pointer-events: all;
+    cursor: default;
+    -webkit-user-select: none;
+    display: none;
+}
+
+#popup-layer .popup-menu ul {
+    padding-left: 0;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #fafafa;
+}
+
+#popup-layer .popup-menu ul li {
+    list-style-type: none;
+    height: 20px;
+    line-height: 20px;
+    padding: 10px;
+    letter-spacing: 1px;
+    color: #444;
+    font-family: Roboto, Helvetica, 'Segoe UI', Arial, sans-serif;;
+}
+
+#popup-layer .popup-menu ul li:hover {
+    background-color: rgb(236, 236, 236);
+}
+
+#popup-layer .popup-menu ul li:active {
+    background-color: rgb(222, 222, 222);
+}
+
+#popup-layer .popup-menu ul li .fa {
+    margin-right: 8px;
+    opacity: 0;
+}
+
+#popup-menu-mode {
+    width: 232px;
+    top: calc(100% - 320px);
+    left: calc(100% - 232px);
+}
+/*
+
+    Name:       Base16 Default Light
+    Author:     Chris Kempson (http://chriskempson.com)
+
+    CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-chrome-devtools)
+    Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
+
+*/
+
+/*
+ *  This file is part of Moeditor.
+ *
+ *  Copyright (c) 2016 Menci <huanghaorui301@gmail.com>
+ *
+ *  Moeditor is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Moeditor is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Moeditor. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#left-panel {
+    background-color: rgb(245, 245, 245);
+}
+
+#left-panel .cover-top {
+    background: linear-gradient(to bottom, rgb(245, 245, 245) 40%, transparent);
+}
+
+#cover-bottom #cover-bottom-background-left {
+    background: rgb(245, 245, 245);
+}
+
+.cm-s-base16-light.CodeMirror {background: #f5f5f5; color: #202020;}
+.cm-s-base16-light div.CodeMirror-selected {background: #e0e0e0 !important;}
+.cm-s-base16-light.CodeMirror ::selection, #container ::selection { background: #e0e0e0; }
+.cm-s-base16-light.CodeMirror ::-moz-selection { background: #e0e0e0; }
+.cm-s-base16-light .CodeMirror-gutters {background: #f5f5f5; border-right: 0px;}
+.cm-s-base16-light .CodeMirror-guttermarker { color: #ac4142; }
+.cm-s-base16-light .CodeMirror-guttermarker-subtle { color: #b0b0b0; }
+.cm-s-base16-light .CodeMirror-linenumber {color: #b0b0b0;}
+.cm-s-base16-light .CodeMirror-cursor {border-left: 1px solid #505050 !important;}
+
+.cm-s-base16-light span.cm-comment {color: #8f5536;}
+.cm-s-base16-light span.cm-atom {color: #aa759f;}
+.cm-s-base16-light span.cm-number {color: #aa759f;}
+
+.cm-s-base16-light span.cm-property, .cm-s-base16-light span.cm-attribute {color: #90a959;}
+.cm-s-base16-light span.cm-keyword {color: #ac4142;}
+.cm-s-base16-light span.cm-string {color: #f4bf75;}
+
+.cm-s-base16-light span.cm-variable {color: #90a959;}
+.cm-s-base16-light span.cm-variable-2 {color: #6a9fb5;}
+.cm-s-base16-light span.cm-def {color: #d28445;}
+.cm-s-base16-light span.cm-bracket {color: #202020;}
+.cm-s-base16-light span.cm-tag {color: #ac4142;}
+.cm-s-base16-light span.cm-link {color: #aa759f;}
+.cm-s-base16-light span.cm-error {background: #ac4142; color: #505050;}
+.cm-s-base16-light span.cm-math {color: #603d7b;}
+.cm-s-base16-light span.cm-math {color: #603d7b;}
+.cm-s-base16-light span.cm-formatting-math {color: #777;}
+.cm-s-base16-light span..cm-quote { color: #90a959; }
+
+/*.cm-s-base16-light .CodeMirror-activeline-background {background: #DDDCDC !important;}*/
+.cm-s-base16-light .CodeMirror-matchingbracket { text-decoration: underline; color: white !important;}
+
+.cm-s-base16-light span.cm-em {color: #28d573;}
+.cm-s-base16-light span.cm-strong {color: #1a88d7;}
+.cm-s-base16-light span.cm-string.cm-url {color: #d57d34;}
+/*
+ *  This file is part of Moeditor.
+ *
+ *  Copyright (c) 2016 Menci <huanghaorui301@gmail.com>
+ *
+ *  Moeditor is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Moeditor is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Moeditor. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.CodeMirror-vscrollbar {
+    width: 6px;
+    overflow-y: hidden !important;
+}
+
+.CodeMirror-vscrollbar:hover {
+    overflow-y: scroll !important;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background: none;
+}
+
+::-webkit-scrollbar {
+    background-color: #ddd;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #b8b8b8;
+}
+
+
+/* === CM6 adaptation (preserve original Moeditor look) === */
+#editor .cm-editor { height: 100%; }
+#editor .cm-scroller { overflow: auto !important; }
+#editor .cm-content { 
+  padding-left: 45px; padding-right: 20px; padding-top: 35px;
+  font-family: 'Roboto Mono', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace !important;
+  font-size: 14px;
+}
+#editor .cm-gutters { 
+  background: #f5f5f5 !important; border-right: none !important; 
+  padding-top: 35px;
+}
+#editor .cm-gutterElement { color: #b0b0b0; }
+#editor .cm-activeLineGutter { background: transparent !important; }
+#editor .cm-activeLine { background: rgba(0,0,0,0.03) !important; }
+#editor .cm-cursor { border-left: 1px solid #505050 !important; }
+
+/* CM6 write-mode width variants (mirrors original .CodeMirror-scroll rules) */
+#main.write-mode.write-mode-thin #editor .cm-content {
+  padding-left: calc(100% / 3) !important;
+  padding-right: calc(100% / 3) !important;
+}
+#main.write-mode.write-mode-medium #editor .cm-content {
+  padding-left: calc(100% / 4) !important;
+  padding-right: calc(100% / 4) !important;
+}
+#main.write-mode.write-mode-wide #editor .cm-content {
+  padding-left: calc(100% / 6) !important;
+  padding-right: calc(100% / 6) !important;
+}
+
+/* Preserve original preview container styles */
+#container-wrapper { overflow-y: scroll; }
+#container-wrapper .cm-editor, #container-wrapper .cm-scroller { height: auto; }
+
+/* Settings overlay (same style as original side-menu) */
+#settings-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(77,77,77,0.2); z-index: 1000002;
+  display: flex; align-items: center; justify-content: center;
+}
+#settings-overlay.hidden { display: none; }
+#settings-panel {
+  background: #fafafa; border-radius: 6px; box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  width: 560px; max-height: 80vh; overflow-y: auto;
+  border: 1px solid #ccc;
+}
+#settings-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 24px; border-bottom: 1px solid #ececec;
+  font-size: 16px; font-weight: 500; color: #444;
+}
+#settings-header button {
+  background: none; border: none; font-size: 22px; cursor: pointer;
+  color: #999; padding: 0 4px; line-height: 1;
+}
+#settings-header button:hover { color: #444; }
+#settings-body { padding: 20px 24px; }
+#settings-body h3 {
+  font-size: 12px; color: #999; margin: 14px 0 8px;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+#settings-body .row { display: flex; align-items: center; padding: 5px 0; }
+#settings-body .row label { flex: 1; font-size: 13px; color: #444; }
+#settings-body .row input, #settings-body .row select {
+  padding: 4px 8px; border: 1px solid #ddd; border-radius: 3px;
+  font-size: 13px; width: 180px; background: #fff; color: #444;
+}
+#settings-body .row input[type="checkbox"] { width: auto; }
+#settings-body .row input[type="number"] { width: 70px; }
+
+/* Mermaid placeholder */
+.mermaid-placeholder {
+  padding: 20px; background: #fafafa; border-radius: 4px;
+  color: #999; font-style: italic; margin: 12px 0;
+  border: 1px dashed #ddd; text-align: center;
+}

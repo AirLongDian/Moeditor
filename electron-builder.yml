@@ -1,0 +1,31 @@
+appId: org.moeditor.app
+productName: Moeditor
+copyright: "Copyright © 2016-2026 Menci"
+
+directories:
+  output: dist-electron
+  buildResources: static
+
+files:
+  - dist/**/*
+  - static/**/*
+  - themes/**/*
+  - package.json
+
+linux:
+  target:
+    - AppImage
+    - snap
+  icon: static/icons/Moeditor.png
+  category: Office
+
+mac:
+  icon: static/icons/Moeditor.icns
+  category: public.app-category.productivity
+  target:
+    - dmg
+
+win:
+  icon: static/icons/Moeditor.ico
+  target:
+    - nsis

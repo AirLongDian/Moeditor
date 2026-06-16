@@ -1,13 +1,16 @@
 {
   "name": "moeditor",
-  "version": "0.2.0",
+  "version": "2.0.0",
   "description": "Your all-purpose markdown editor",
-  "main": "app/index.js",
+  "main": "dist/main/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently -k -n vite,tsc,electron \"vite\" \"tsc -p tsconfig.main.json\" \"wait-on http://localhost:5173 && electron .\"",
+    "build:renderer": "vite build",
+    "build:main": "tsc -p tsconfig.main.json",
+    "build": "npm run build:renderer && npm run build:main",
     "start": "electron .",
-    "dist": "build -l snap",
-    "postinstall": "electron-builder install-app-deps"
+    "dist": "npm run build && electron-builder",
+    "dist:snap": "npm run build && electron-builder --linux snap"
   },
   "repository": {
     "type": "git",
@@ -15,7 +18,8 @@
   },
   "keywords": [
     "markdown",
-    "editor"
+    "editor",
+    "electron"
   ],
   "author": "Menci",
   "license": "GPL-3.0",
@@ -24,33 +28,59 @@
   },
   "homepage": "https://github.com/Menci/Moeditor#readme",
   "dependencies": {
-    "biu.js": "^1.2.0",
-    "codemirror": "^5.18.2",
-    "configstore": "^2.1.0",
-    "electron-localshortcut": "^0.6.1",
-    "electron-titlebar": "0.0.2",
-    "flowchart.js": "^1.6.3",
-    "font-awesome": "^4.6.3",
-    "highlight.js": "^9.6.0",
-    "jquery": "^3.1.0",
-    "js-sequence-diagrams": "^1000000.0.6",
-    "katex": "^0.6.0",
-    "lodash": "^4.15.0",
-    "lrucache": "^1.0.2",
-    "mathjax": "^2.6.1",
-    "mathjax-node": "^0.5.1",
-    "mime": "^1.3.4",
-    "moemark": "^0.3.8",
-    "os-locale": "^1.4.0",
-    "raphael": "^2.2.1"
+    "@codemirror/autocomplete": "^6.18.0",
+    "@codemirror/commands": "^6.8.0",
+    "@codemirror/lang-markdown": "^6.3.0",
+    "@codemirror/language": "^6.11.0",
+    "@codemirror/search": "^6.5.0",
+    "@codemirror/state": "^6.5.0",
+    "@codemirror/view": "^6.36.0",
+    "@codemirror/theme-one-dark": "^6.1.0",
+    "electron-store": "^10.0.0",
+    "highlight.js": "^11.11.0",
+    "katex": "^0.16.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-texmath": "^1.0.0",
+    "mermaid": "^11.4.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "electron": "^1.4.0",
-    "electron-builder": "^20.31.2"
+    "@types/katex": "^0.16.0",
+    "@types/markdown-it": "^14.1.0",
+    "@types/uuid": "^10.0.0",
+    "concurrently": "^9.1.0",
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0",
+    "wait-on": "^8.0.0"
   },
   "build": {
+    "appId": "org.moeditor.app",
+    "productName": "Moeditor",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "static/**/*",
+      "themes/**/*",
+      "package.json"
+    ],
     "linux": {
-      "icon": "icons/Moeditor.icns"
+      "target": [
+        "AppImage",
+        "snap"
+      ],
+      "icon": "static/icons/Moeditor.png",
+      "category": "Office"
+    },
+    "mac": {
+      "icon": "static/icons/Moeditor.icns",
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "icon": "static/icons/Moeditor.ico"
     }
   }
 }

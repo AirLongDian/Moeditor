@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moeditor Settings</title>
+  <style>
+    :root {
+      --bg: #fff; --bg2: #f5f5f5; --text: #333; --border: #ddd;
+      --accent: #3498db; --text2: #666;
+    }
+    .dark {
+      --bg: #1e1e1e; --bg2: #252526; --text: #ccc; --border: #444;
+      --accent: #569cd6; --text2: #999;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg); color: var(--text); padding: 20px 24px; font-size: 13px; }
+    h2 { font-size: 16px; margin: 20px 0 12px; padding-bottom: 6px;
+      border-bottom: 1px solid var(--border); }
+    h2:first-child { margin-top: 0; }
+    .row { display: flex; align-items: center; padding: 8px 0; }
+    .row label { flex: 1; color: var(--text); }
+    .row input, .row select {
+      padding: 4px 8px; border: 1px solid var(--border);
+      border-radius: 3px; background: var(--bg); color: var(--text);
+      font-size: 13px; width: 180px;
+    }
+    .row input[type="checkbox"] { width: auto; margin-right: 8px; }
+    .row input[type="number"] { width: 80px; }
+    .footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--border);
+      color: var(--text2); font-size: 12px; text-align: center; }
+  </style>
+</head>
+<body>
+  <h2>General</h2>
+  <div class="row">
+    <label>Language</label>
+    <select id="cfg-locale">
+      <option value="en">English</option>
+      <option value="zh_CN">简体中文</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Scale Factor</label>
+    <input type="number" id="cfg-scale-factor" min="0.5" max="3" step="0.1" />
+  </div>
+
+  <h2>Editor</h2>
+  <div class="row">
+    <label>Font Size</label>
+    <input type="number" id="cfg-editor-font-size" min="10" max="32" />
+  </div>
+  <div class="row">
+    <label>Line Height</label>
+    <input type="number" id="cfg-editor-line-height" min="1" max="3" step="0.1" />
+  </div>
+  <div class="row">
+    <label>Tab Size</label>
+    <input type="number" id="cfg-tab-size" min="2" max="8" />
+  </div>
+
+  <h2>Preview</h2>
+  <div class="row">
+    <label>Math (KaTeX)</label>
+    <input type="checkbox" id="cfg-math" />
+  </div>
+  <div class="row">
+    <label>UML Diagrams (Mermaid)</label>
+    <input type="checkbox" id="cfg-uml-diagrams" />
+  </div>
+
+  <h2>Image Paste</h2>
+  <div class="row">
+    <label>Path Mode</label>
+    <select id="cfg-paste-image-path">
+      <option value="relative">Relative (./...)</option>
+      <option value="absolute">Absolute</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Folder Template</label>
+    <input type="text" id="cfg-paste-image-folder" placeholder="{filename}_files" />
+  </div>
+
+  <div class="footer">Moeditor v2.0.0 — Settings are saved automatically</div>
+  <script type="module" src="./settings/settings-panel.ts"></script>
+</body>
+</html>

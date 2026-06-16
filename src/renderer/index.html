@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Moeditor</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <div id="electron-titlebar" class="inset" style="z-index: 1; ">
+        <div class="drag" id="drag-left"></div>
+        <div class="drag" id="drag-right"></div>
+    </div>
+
+    <div id="side-menu">
+        <div id="logo">MOEDITOR</div>
+        <ul>
+            <li data-action="new">New</li>
+            <li data-action="open">Open</li>
+            <li data-action="save">Save</li>
+            <li data-action="save-as">Save as</li>
+            <li class="break"></li>
+            <li data-action="export-as-html">Export as HTML</li>
+            <li data-action="export-as-pdf">Export as PDF</li>
+            <li class="break"></li>
+            <li data-action="settings">Settings</li>
+            <li data-action="about">About</li>
+        </ul>
+    </div>
+
+    <div id="file-tree" class="tree-view" style="display:none"></div>
+
+    <div id="main" class="notransition">
+        <div id="side-menu-cover"></div>
+        <div id="file-tree-cover"></div>
+        <div id="main-container">
+            <div id="left-panel">
+                <div id="editor"></div>
+                <div class="cover-top"></div>
+            </div>
+            <div id="right-panel">
+                <div id="container-wrapper" tabindex="-1">
+                    <div id="container" class="preview"></div>
+                </div>
+                <div class="cover-top"></div>
+            </div>
+        </div>
+        <div id="cover-bottom">
+            <div id="cover-bottom-background-left"></div>
+            <div id="cover-bottom-background-right"></div>
+            <div id="cover-bottom-left">
+                <div class="button-bottom" id="button-bottom-menu" title="Menu">&#9776;</div>
+            </div>
+            <div id="cover-bottom-right">
+                <div class="button-bottom" id="button-bottom-focus" title="Toggle focus mode">&#8857;</div>
+                <div class="button-bottom" id="button-bottom-mode" title="Edit mode">&#128065;</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup-layer">
+        <div class="popup-menu" id="popup-menu-mode" tabindex="-1">
+            <ul>
+                <li data-name="write-wide"><span>&#10003;</span> Write Mode (Wide)</li>
+                <li data-name="write-medium"><span>&#10003;</span> Write Mode (Medium)</li>
+                <li data-name="write-narrow"><span>&#10003;</span> Write Mode (Narrow)</li>
+                <li data-name="read-wide"><span>&#10003;</span> Read Mode (Wide)</li>
+                <li data-name="read-medium"><span>&#10003;</span> Read Mode (Medium)</li>
+                <li data-name="read-narrow"><span>&#10003;</span> Read Mode (Narrow)</li>
+                <li data-name="preview"><span>&#10003;</span> Preview Mode</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="settings-overlay" class="hidden">
+        <div id="settings-panel">
+            <div id="settings-header">
+                <span>Settings</span>
+                <button id="settings-close">&times;</button>
+            </div>
+            <div id="settings-body"></div>
+        </div>
+    </div>
+
+    <script type="module" src="./index.ts"></script>
+</body>
+</html>

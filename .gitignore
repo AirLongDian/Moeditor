@@ -40,3 +40,12 @@ jspm_packages
 
 # Jetbrains IDEs
 .idea
+
+# Build output
+dist/
+dist-electron/
+out/
+*.tsbuildinfo
+
+# AirPlan state
+AirPlan/state/
