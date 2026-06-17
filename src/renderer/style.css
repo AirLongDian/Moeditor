@@ -779,24 +779,27 @@ body[settings-mode=read] #drag-right, body[settings-mode=write] #drag-right {
   overflow: hidden;
 }
 
-/* Window title bar with macOS dots */
+/* Window title bar background */
 #container pre::before {
-  content: '●  ●  ●';
-  display: flex;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  content: '';
+  display: block;
   height: 32px;
-  padding: 0 16px;
-  font-size: 14px;
-  letter-spacing: 4px;
   background: #21252b;
   border-bottom: 1px solid #181a1f;
-  /* Three dots: red, yellow, green */
-  text-shadow: 12px 0 0 #ff5f56, 24px 0 0 #ffbd2e, 36px 0 0 #27ca40;
-  color: transparent;
+}
+
+/* Window title bar with macOS dots */
+#container pre::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  width: 12px;
+  height: 12px;
+  background: #ff5f56;
+  border-radius: 50%;
+  box-shadow: 18px 0 0 #ffbd2e, 36px 0 0 #27ca40;
 }
 
 /* Code content */
@@ -804,7 +807,7 @@ body[settings-mode=read] #drag-right, body[settings-mode=write] #drag-right {
   display: block;
   overflow-x: auto;
   padding: 12px 16px;
-  margin-top: 0;
+  padding-top: 44px;  /* Space for title bar (32px) + padding */
   margin-bottom: 0;
   background: transparent !important;
   border: none !important;
