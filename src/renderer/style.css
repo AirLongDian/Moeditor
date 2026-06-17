@@ -779,20 +779,9 @@ body[settings-mode=read] #drag-right, body[settings-mode=write] #drag-right {
   overflow: hidden;
 }
 
-/* Window title bar */
+/* Window title bar with macOS dots */
 #container pre::before {
-  content: '';
-  display: flex;
-  align-items: center;
-  height: 36px;
-  background: #21252b;
-  padding: 0 12px;
-  border-bottom: 1px solid #181a1f;
-}
-
-/* macOS window dots */
-#container pre::after {
-  content: '● ● ●';
+  content: '●  ●  ●';
   display: flex;
   align-items: center;
   position: absolute;
@@ -800,16 +789,14 @@ body[settings-mode=read] #drag-right, body[settings-mode=write] #drag-right {
   left: 0;
   right: 0;
   height: 36px;
-  padding: 0 12px;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: #4b5263;
-  background: linear-gradient(to right, #ff5f56 0%, #ff5f56 8px, transparent 8px,
-                              #ffbd2e 0%, #ffbd2e 8px, transparent 8px,
-                              #27ca40 0%, #27ca40 8px, transparent 8px);
-  background-size: 48px 100%;
-  background-position: 12px 0;
-  background-repeat: no-repeat;
+  padding: 0 16px;
+  font-size: 14px;
+  letter-spacing: 4px;
+  background: #21252b;
+  border-bottom: 1px solid #181a1f;
+  /* Three dots: red, yellow, green */
+  text-shadow: 12px 0 0 #ff5f56, 24px 0 0 #ffbd2e, 36px 0 0 #27ca40;
+  color: transparent;
 }
 
 /* Language label - extracted from class */
