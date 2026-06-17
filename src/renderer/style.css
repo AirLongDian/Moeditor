@@ -766,123 +766,178 @@ body[settings-mode=read] #drag-right, body[settings-mode=write] #drag-right {
   color: #999; font-style: italic; margin: 12px 0;
   border: 1px dashed #ddd; text-align: center;
 }
-pre code.hljs {
+
+/* Code block card style - macOS window effect */
+#container pre {
+  position: relative;
+  background: #282c34 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 0 !important;
+  margin: 16px 0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Window title bar */
+#container pre::before {
+  content: '';
+  display: flex;
+  align-items: center;
+  height: 36px;
+  background: #21252b;
+  padding: 0 12px;
+  border-bottom: 1px solid #181a1f;
+}
+
+/* macOS window dots */
+#container pre::after {
+  content: '● ● ●';
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  padding: 0 12px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #4b5263;
+  background: linear-gradient(to right, #ff5f56 0%, #ff5f56 8px, transparent 8px,
+                              #ffbd2e 0%, #ffbd2e 8px, transparent 8px,
+                              #27ca40 0%, #27ca40 8px, transparent 8px);
+  background-size: 48px 100%;
+  background-position: 12px 0;
+  background-repeat: no-repeat;
+}
+
+/* Language label - extracted from class */
+#container pre code.hljs {
   display: block;
   overflow-x: auto;
-  padding: 1em
+  padding: 16px 16px 16px 16px;
+  margin-top: 36px;
+  margin-bottom: 0;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 0 8px 8px;
 }
-code.hljs {
-  padding: 3px 5px
-}
-/*!
-  Theme: GitHub
-  Description: Light theme as seen on github.com
-  Author: github.com
-  Maintainer: @Hirse
-  Updated: 2021-05-15
 
-  Outdated base version: https://github.com/primer/github-syntax-light
-  Current colors taken from GitHub's CSS
-*/
+/* Language badge */
+#container pre code.hljs::before {
+  content: attr(class);
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 11px;
+  font-family: 'Maple Mono NF CN', 'Roboto Mono', monospace;
+  color: #61afef;
+  background: rgba(97, 175, 239, 0.15);
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: lowercase;
+}
+
+/* Remove language- prefix from display */
+#container pre code.hljs::before {
+  content: attr(class);
+}
+
+/* Extract language from class for display */
+#container pre code.language-javascript::before { content: 'javascript'; }
+#container pre code.language-js::before { content: 'javascript'; }
+#container pre code.language-typescript::before { content: 'typescript'; }
+#container pre code.language-ts::before { content: 'typescript'; }
+#container pre code.language-python::before { content: 'python'; }
+#container pre code.language-py::before { content: 'python'; }
+#container pre code.language-css::before { content: 'css'; }
+#container pre code.language-html::before { content: 'html'; }
+#container pre code.language-xml::before { content: 'html'; }
+#container pre code.language-json::before { content: 'json'; }
+#container pre code.language-bash::before { content: 'bash'; }
+#container pre code.language-sh::before { content: 'bash'; }
+#container pre code.language-sql::before { content: 'sql'; }
+#container pre code.language-java::before { content: 'java'; }
+#container pre code.language-c::before { content: 'c'; }
+#container pre code.language-cpp::before { content: 'cpp'; }
+#container pre code.language-go::before { content: 'go'; }
+#container pre code.language-rust::before { content: 'rust'; }
+#container pre code.language-rs::before { content: 'rust'; }
+#container pre code.language-markdown::before { content: 'markdown'; }
+#container pre code.language-md::before { content: 'markdown'; }
+#container pre code.language-yaml::before { content: 'yaml'; }
+#container pre code.language-yml::before { content: 'yaml'; }
+#container pre code.language-dockerfile::before { content: 'dockerfile'; }
+#container pre code.language-shell::before { content: 'shell'; }
+#container pre code.language-console::before { content: 'console'; }
+#container pre code.language-text::before { content: 'text'; }
+#container pre code.language-none::before { content: 'code'; }
+
+#container pre code {
+  padding: 3px 5px;
+}
+/* One Dark theme for code blocks - matches dark editor */
 .hljs {
-  color: #24292e;
-  background: #f6f8fa;
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
+  color: #abb2bf;
+  background: transparent;
+}
+.hljs-comment,
+.hljs-quote {
+  color: #5c6370;
+  font-style: italic
 }
 .hljs-doctag,
 .hljs-keyword,
-.hljs-meta .hljs-keyword,
-.hljs-template-tag,
-.hljs-template-variable,
-.hljs-type,
-.hljs-variable.language_ {
-  /* prettylights-syntax-keyword */
-  color: #d73a49
+.hljs-formula {
+  color: #c678dd
 }
-.hljs-title,
-.hljs-title.class_,
-.hljs-title.class_.inherited__,
-.hljs-title.function_ {
-  /* prettylights-syntax-entity */
-  color: #6f42c1
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75
+}
+.hljs-literal {
+  color: #56b6c2
+}
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+  color: #98c379
 }
 .hljs-attr,
-.hljs-attribute,
-.hljs-literal,
-.hljs-meta,
-.hljs-number,
-.hljs-operator,
 .hljs-variable,
-.hljs-selector-attr,
+.hljs-template-variable,
+.hljs-type,
 .hljs-selector-class,
-.hljs-selector-id {
-  /* prettylights-syntax-constant */
-  color: #005cc5
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66
 }
-.hljs-regexp,
-.hljs-string,
-.hljs-meta .hljs-string {
-  /* prettylights-syntax-string */
-  color: #032f62
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61afef
 }
 .hljs-built_in,
-.hljs-symbol {
-  /* prettylights-syntax-variable */
-  color: #e36209
-}
-.hljs-comment,
-.hljs-code,
-.hljs-formula {
-  /* prettylights-syntax-comment */
-  color: #6a737d
-}
-.hljs-name,
-.hljs-quote,
-.hljs-selector-tag,
-.hljs-selector-pseudo {
-  /* prettylights-syntax-entity-tag */
-  color: #22863a
-}
-.hljs-subst {
-  /* prettylights-syntax-storage-modifier-import */
-  color: #24292e
-}
-.hljs-section {
-  /* prettylights-syntax-markup-heading */
-  color: #005cc5;
-  font-weight: bold
-}
-.hljs-bullet {
-  /* prettylights-syntax-markup-list */
-  color: #735c0f
+.hljs-title.class_,
+.hljs-class .hljs-title {
+  color: #e6c07b
 }
 .hljs-emphasis {
-  /* prettylights-syntax-markup-italic */
-  color: #24292e;
   font-style: italic
 }
 .hljs-strong {
-  /* prettylights-syntax-markup-bold */
-  color: #24292e;
   font-weight: bold
 }
-.hljs-addition {
-  /* prettylights-syntax-markup-inserted */
-  color: #22863a;
-  background-color: #f0fff4
-}
-.hljs-deletion {
-  /* prettylights-syntax-markup-deleted */
-  color: #b31d28;
-  background-color: #ffeef0
-}
-.hljs-char.escape_,
-.hljs-link,
-.hljs-params,
-.hljs-property,
-.hljs-punctuation,
-.hljs-tag {
-  /* purposely ignored */
-  
+.hljs-link {
+  text-decoration: underline
 }
