@@ -4,6 +4,7 @@ import {
   syntaxHighlighting, bracketMatching, foldKeymap,
   HighlightStyle,
 } from '@codemirror/language';
+import { indentWithTab } from '@codemirror/commands';
 import { tags } from '@lezer/highlight';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { keymap, highlightSpecialChars, drawSelection, highlightActiveLine, dropCursor,
@@ -67,6 +68,7 @@ function baseExtensions(): Extension[] {
     history(),
     foldGutter(),
     indentOnInput(),
+    indentWithTab(),
     syntaxHighlighting(markdownHighlightStyle),
     bracketMatching(),
     closeBrackets(),

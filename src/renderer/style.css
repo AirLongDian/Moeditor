@@ -363,6 +363,25 @@ body[settings-editor-font="sans"] #editor  * {
     -webkit-user-select: initial;
 }
 
+#container pre {
+    background: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 12px 0;
+}
+#container code {
+    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 0.9em;
+}
+#container p > code {
+    background: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 3px;
+    padding: 2px 6px;
+}
+
 #main.read-mode #container {
     padding-left: 0;
     padding-right: 0;
@@ -771,7 +790,9 @@ code.hljs {
 */
 .hljs {
   color: #24292e;
-  background: #ffffff
+  background: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
 }
 .hljs-doctag,
 .hljs-keyword,
