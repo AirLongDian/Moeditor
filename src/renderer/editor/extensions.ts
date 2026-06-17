@@ -8,11 +8,11 @@ import { indentWithTab } from '@codemirror/commands';
 import { tags } from '@lezer/highlight';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { keymap, highlightSpecialChars, drawSelection, highlightActiveLine, dropCursor,
-  rectangularSelection, crosshairCursor, lineNumbers, highlightActiveLineGutter } from '@codemirror/view';
+  rectangularSelection, crosshairCursor } from '@codemirror/view';
 import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
 import { searchKeymap, highlightSelectionMatches } from '@codemirror/search';
 import { closeBrackets, closeBracketsKeymap } from '@codemirror/autocomplete';
-import { indentOnInput, foldGutter } from '@codemirror/language';
+import { indentOnInput } from '@codemirror/language';
 
 // Markdown syntax highlighting based on base16-light palette
 const markdownHighlightStyle = HighlightStyle.define([
@@ -62,11 +62,8 @@ function baseExtensions(): Extension[] {
     dropCursor(),
     rectangularSelection(),
     crosshairCursor(),
-    lineNumbers(),
-    highlightActiveLineGutter(),
     highlightActiveLine(),
     history(),
-    foldGutter(),
     indentOnInput(),
     syntaxHighlighting(markdownHighlightStyle),
     bracketMatching(),
