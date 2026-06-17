@@ -806,8 +806,8 @@ body[settings-mode=read] #drag-right, body[settings-mode=write] #drag-right {
 #container pre code.hljs {
   display: block;
   overflow-x: auto;
-  padding: 12px 16px;
-  padding-top: 44px;  /* Space for title bar (32px) + padding */
+  padding: 6px 16px;
+  padding-top: 34px;  /* Space for title bar (32px) + 2px */
   margin-bottom: 0;
   background: transparent !important;
   border: none !important;
