@@ -68,12 +68,12 @@ function baseExtensions(): Extension[] {
     history(),
     foldGutter(),
     indentOnInput(),
-    indentWithTab(),
     syntaxHighlighting(markdownHighlightStyle),
     bracketMatching(),
     closeBrackets(),
     highlightSelectionMatches(),
     keymap.of([
+      indentWithTab,
       ...closeBracketsKeymap,
       ...defaultKeymap,
       ...searchKeymap,

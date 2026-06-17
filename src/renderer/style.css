@@ -196,13 +196,9 @@ html, body {
 
 .CodeMirror-activeline-background { background: none; }
 
-#editor textarea {
-    width: 0;
-    height: 0;
-    border: 0;
-    margin: 0;
-    padding: 0;
-}
+/* Legacy CodeMirror 5 hidden textarea — NOT needed for CM6.
+   CM6 uses .cm-content .cm-input or textarea for input;
+   zeroing ALL #editor textarea breaks CM6 input. */
 
 .cover {
     position: absolute;
